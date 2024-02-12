@@ -1,15 +1,12 @@
 import allure
-from selene.support.shared import browser
-from selene.support.shared.jquery_style import s
-from selene.support import by
-from selene.support.conditions import be
+from selene import browser, be, by
 from allure_commons.types import Severity
 
 
 def test_decorator_allure_step():
     open_main_page()
     search_for_repo("eroshenkoam/allure-example")
-    go_to_repo("eroshenkoam/allure-example")
+    go_to_repo()
     open_issue()
     check_issue("#76")
     # dynamic labels
@@ -34,15 +31,15 @@ def search_for_repo(repo):
 
 
 @allure.step("Переходим по найденной ссылке:")
-def go_to_repo(repo):
-    s(by.link_text(repo)).click()
+def go_to_repo():
+    browser.element('a[href="/eroshenkoam/allure-example"]').click()
 
 
 @allure.step("Переходим в раздел Issues:")
 def open_issue():
-    s("#issues-tab").click()
+    browser.element("#issues-tab").click()
 
 
 @allure.step("Проверяем наличие Issue с номером 76:")
 def check_issue(num):
-    s(by.partial_text(num)).should(be.visible)
+    browser.element(by.partial_text(num)).should(be.visible)

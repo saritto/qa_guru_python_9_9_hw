@@ -1,8 +1,5 @@
 import allure
-from selene.support.shared import browser
-from selene.support.shared.jquery_style import s
-from selene.support import by
-from selene.support.conditions import be
+from selene import browser, be, by
 from allure_commons.types import Severity
 
 
@@ -22,10 +19,10 @@ def test_with_allure_step():
         browser.element('#query-builder-test').type("eroshenkoam/allure-example").press_enter()
 
     with allure.step("Переходим по найденной ссылке:"):
-        s(by.link_text("eroshenkoam/allure-example")).click()
+        browser.element('a[href="/eroshenkoam/allure-example"]').click()
 
     with allure.step("Переходим в раздел Issues:"):
-        s("#issues-tab").click()
+        browser.element("#issues-tab").click()
 
     with allure.step("Проверяем наличие Issue с номером 76:"):
-        s(by.partial_text("#76")).should(be.visible)
+        browser.element(by.partial_text("#76")).should(be.visible)
